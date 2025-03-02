@@ -7,16 +7,40 @@ import { Book } from "../types/bookTypes";
 const BookList: React.FC = () => {
   const { books, loading, error, setQuery } = useBooks();
   const [hoveredBook, setHoveredBook] = useState<Book | null>(null);
+  const [hoveredBookPosition, setHoveredBookPosition] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
   let hoverTimeout: NodeJS.Timeout;
 
-  const handleMouseEnter = (book: Book) => {
+  const handleMouseEnter = (book: Book, event: React.MouseEvent) => {
     clearTimeout(hoverTimeout);
+
+    const bookElement = event.currentTarget as HTMLElement;
+    const bookRect = bookElement.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const overlayWidth = 250;
+    const margin = 10;
+
+    let leftPosition = bookRect.left + bookRect.width / 2 - overlayWidth / 2;
+    let topPosition = bookRect.bottom;
+
+    if (leftPosition + overlayWidth > viewportWidth - margin) {
+      leftPosition = viewportWidth - overlayWidth - margin;
+    }
+
+    if (leftPosition < margin) {
+      leftPosition = margin;
+    }
+
+    setHoveredBookPosition({ top: topPosition, left: leftPosition });
     setHoveredBook(book);
   };
 
   const handleMouseLeave = () => {
     hoverTimeout = setTimeout(() => {
-      // setHoveredBook(null);
+      setHoveredBook(null);
+      setHoveredBookPosition(null);
     }, 300);
   };
 
@@ -36,42 +60,45 @@ const BookList: React.FC = () => {
       <div className="book-grid">
         {books.length > 0
           ? books.map((book) => (
-              <BookCard
+              <div
                 key={book.key}
-                book={book}
-                onMouseEnter={() => handleMouseEnter(book)}
+                className="book-card-wrapper"
+                onMouseEnter={(e) => handleMouseEnter(book, e)}
                 onMouseLeave={handleMouseLeave}
-              />
+              >
+                <BookCard book={book} />
+                {hoveredBook && hoveredBook.key === book.key && hoveredBookPosition && (
+                  <div
+                    className="book-preview-overlay"
+                    style={{
+                      top: hoveredBookPosition.top,
+                      left: hoveredBookPosition.left,
+                    }}
+                    onMouseEnter={() => clearTimeout(hoverTimeout)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="preview-content">
+                      {hoveredBook.cover_i && (
+                        <img
+                          src={`https://covers.openlibrary.org/b/id/${hoveredBook.cover_i}-L.jpg`}
+                          alt={hoveredBook.title}
+                          className="preview-image"
+                        />
+                      )}
+                      <h3 className="preview-title">{hoveredBook.title}</h3>
+                      <p className="preview-text">
+                        By: {hoveredBook.author_name?.join(", ") || "Unknown"}
+                      </p>
+                      <p className="preview-text">
+                        Published: {hoveredBook.first_publish_year || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             ))
           : !loading && <p className="no-results">No books found</p>}
       </div>
-
-      {hoveredBook && (
-        <div
-          className="book-item-overlay"
-          onMouseEnter={() => clearTimeout(hoverTimeout)}
-          onMouseLeave={handleMouseLeave}
-        >
-          <div className="overlay-content">
-            <button className="close-button" onClick={() => setHoveredBook(null)}>
-              ✖
-            </button>
-            {hoveredBook.cover_i && (
-              <img
-                src={`https://covers.openlibrary.org/b/id/${hoveredBook.cover_i}-L.jpg`}
-                alt={hoveredBook.title}
-                className="overlay-image"
-              />
-            )}
-            <h2 className="overlay-title">{hoveredBook.title}</h2>
-            <p className="overlay-text">By: {hoveredBook.author_name?.join(", ") || "Unknown"}</p>
-            <p className="overlay-text">Published: {hoveredBook.first_publish_year || "N/A"}</p>
-            <p className="overlay-text">Format: {hoveredBook.physical_format || "Unknown"}</p>
-            <p className="overlay-text">Pages: {hoveredBook.number_of_pages_median || "N/A"}</p>
-            <p className="overlay-text">Weight: {hoveredBook.weight || "N/A"}</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

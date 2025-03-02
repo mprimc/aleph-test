@@ -1,6 +1,5 @@
 .book-list-container {
   text-align: center;
-  font-family: "Arial", sans-serif;
   width: 100%;
 }
 
@@ -8,7 +7,7 @@
   padding: 10px;
   width: 300px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--Neutral-600-P);
   border-radius: 5px;
   margin-bottom: 15px;
 }
@@ -23,59 +22,56 @@
 
 .no-results {
   font-size: 1.2rem;
-  color: gray;
+  color: var(--Neutral-600-P);
 }
 
 .loading,
 .error {
   font-size: 1.2rem;
-  color: red;
+  color: var(--Persian-Red-500-P);
+}
+.book-card-wrapper {
+  position: relative;
 }
 
-.book-item-overlay {
+.book-preview-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
+  background: var(--Neutral-950);
+  color: var(--White);
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0px 4px 8px var(--Black);
+  z-index: 1000;
+  width: 250px;
+  max-width: calc(100vw - 20px);
+  display: block;
+  transition: opacity 0.2s ease-in-out;
+  visibility: hidden;
+  opacity: 0;
 }
 
-.overlay-content {
-  background: black;
-  padding: 20px;
-  border-radius: 8px;
+.book-card-wrapper:hover .book-preview-overlay {
+  visibility: visible;
+  opacity: 1;
+}
+
+.preview-content {
   text-align: center;
-  width: 400px;
 }
 
-.overlay-image {
+.preview-image {
   width: 100%;
   height: auto;
-  margin-bottom: 10px;
+  border-radius: 4px;
+  margin-bottom: 5px;
 }
 
-.close-button {
-  background: red;
-  color: white;
-  border: none;
-  font-size: 20px;
-  padding: 5px 10px;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.preview-title {
+  font-size: 18px;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-.overlay-title {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.overlay-text {
-  font-size: 16px;
+.preview-text {
+  font-size: 14px;
 }
