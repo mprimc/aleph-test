@@ -11,31 +11,32 @@ export const useBookInfo = () => {
   const fetchBook = useCallback(async () => {
     setLoading(true);
     setError(null);
-  
+
     try {
       const response = await fetch(API_URL);
-  
+
       if (!response.ok) {
         throw new Error(`Failed to fetch book data. Status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-  
+
       const bookKey = "ISBN:9783442236862";
       if (!data[bookKey]) {
         throw new Error("Book not found in API response");
       }
-  
+
       const bookDetails = data[bookKey].details;
-  
+
       const bookInfo = {
         title: bookDetails.title,
-        authors: bookDetails.authors?.map((author: any) => author.name).join(", ") || "Unknown Author",
+        authors:
+          bookDetails.authors?.map((author: any) => author.name).join(", ") || "Unknown Author",
         publishDate: bookDetails.publish_date || "Unknown Date",
         physicalFormat: bookDetails.physical_format || "Unknown Format",
         coverImage: `https://covers.openlibrary.org/b/ISBN/9783442236862-L.jpg`,
       };
-  
+
       setBook(bookInfo);
     } catch (error: any) {
       setError(error.message || "An error occurred");
@@ -43,6 +44,6 @@ export const useBookInfo = () => {
       setLoading(false);
     }
   }, []);
-  
+
   return { book, loading, error, fetchBook };
 };
