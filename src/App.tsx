@@ -1,9 +1,10 @@
 import "./App.css";
+import FizzBuzz from "./components/FizzBuzz";
 
 function App() {
   return (
     <div className="App">
-        Your app goes here
+        <FizzBuzz/>
     </div>
   );
 }
