@@ -6,7 +6,7 @@ const BookInfo: React.FC = () => {
   const { book, loading, error, fetchBook } = useBookInfo();
 
   return (
-    <div className="book-container">
+    <div className="book-info-container">
       <button className="load-button" onClick={fetchBook}>
         Load Book Info
       </button>
@@ -16,8 +16,8 @@ const BookInfo: React.FC = () => {
 
       {book && (
         <div className="book-details-container">
-          <img className="book-cover" src={book.coverImage} alt={book.title} />
-          <h2 className="book-title">{book.title}</h2>
+          <img className="book-details-cover" src={book.coverImage} alt={book.title} />
+          <h2 className="book-details-title">{book.title}</h2>
           <p>
             <strong>Author(s):</strong> {book.authors}
           </p>

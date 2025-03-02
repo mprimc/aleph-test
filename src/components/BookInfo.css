@@ -1,10 +1,10 @@
-.book-container {
+.book-info-container {
   text-align: center;
-  margin-top: 20px;
   font-family: "Arial", sans-serif;
+  min-width: 300px;
 }
 
-.book-container .load-button {
+.book-info-container .load-button {
   padding: 10px 20px;
   font-size: 1rem;
   background-color: var(--Secondary-600-P);
@@ -12,42 +12,41 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px;
   transition: background 0.3s ease-in-out;
 }
 
-.book-container .load-button:hover {
+.book-info-container .load-button:hover {
   background-color: var(--Secondary-900);
 }
 
-.book-container .book-details-container {
-margin-top: 30px;
+.book-info-container .book-details-container {
+  margin-top: 30px;
 }
 
-.book-container .book-cover {
+.book-info-container .book-details-cover {
   max-width: 300px;
   margin-bottom: 20px;
   border-radius: 5px;
   box-shadow: 3px 3px 10px var(--Black);
 }
 
-.book-container .book-title {
+.book-info-container .book-details-title {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-.book-container p {
+.book-info-container p {
   font-size: 1rem;
   margin: 5px 0;
 }
 
-.book-container .loading {
+.book-info-container .loading {
   font-size: 1.2rem;
   text-align: center;
   color: var(--Secondary-600-P);
 }
 
-.book-container .error {
+.book-info-container .error {
   font-size: 1.2rem;
   text-align: center;
   color: var(--Persian-Red-500-P);
