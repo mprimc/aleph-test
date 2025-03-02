@@ -4,11 +4,13 @@ import { Book } from "../types/bookTypes";
 
 interface BookCardProps {
   book: Book;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
-const BookCard: React.FC<BookCardProps> = ({ book }) => {
+const BookCard: React.FC<BookCardProps> = ({ book, onMouseEnter, onMouseLeave }) => {
   return (
-    <div className="book-item-container">
+    <div className="book-item-container" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       {book.cover_i ? (
         <img
           className="book-item-cover"
