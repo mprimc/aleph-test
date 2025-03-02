@@ -1,0 +1,33 @@
+.book-list-container {
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  width: 100%;
+}
+
+.search-box {
+  padding: 10px;
+  width: 300px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.book-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.no-results {
+  font-size: 1.2rem;
+  color: gray;
+}
+
+.loading,
+.error {
+  font-size: 1.2rem;
+  color: red;
+}
