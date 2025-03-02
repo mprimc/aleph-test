@@ -11,7 +11,8 @@ export default defineConfig({
     setupFiles: ["./tests/setup.js", "./src/setupTests.ts"],
     testTimeout: 30000,
     coverage: {
-      provider: "istanbul",
+      provider: "v8",
+      reporter: ["text", "html"],
     },
   },
   server: {
