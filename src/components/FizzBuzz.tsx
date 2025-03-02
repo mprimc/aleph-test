@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./FizzBuzz.css"; // Import the CSS file
 
 const FizzBuzz: React.FC = () => {
   const [output, setOutput] = useState<string[]>([]);
@@ -20,11 +21,11 @@ const FizzBuzz: React.FC = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <button onClick={handleFizzBuzz} style={{ padding: "10px 20px", fontSize: "16px" }}>
+    <div className="fizzbuzz-container">
+      <button onClick={handleFizzBuzz} className="fizzbuzz-button">
         Run FizzBuzz
       </button>
-      <div style={{ marginTop: "20px", whiteSpace: "pre-line" }}>
+      <div className="fizzbuzz-output">
         {output.map((line, index) => (
           <div key={index}>{line}</div>
         ))}

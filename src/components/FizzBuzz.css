@@ -1,0 +1,13 @@
+.fizzbuzz-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.fizzbuzz-button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.fizzbuzz-output {
+  white-space: pre-line;
+}
