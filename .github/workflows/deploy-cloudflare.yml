@@ -1,0 +1,42 @@
+# Deploys web application to cloudflare pages using wrangler action.
+name: Deploy React app to Cloudflare
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.ref }}-deploy-web
+  cancel-in-progress: true
+
+jobs:
+  deploy-to-cloudflare-pages:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ["22.x"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: "./package-lock.json"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Package app
+        run: npm run build
+
+      - name: Deploy to cloudflare pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # accountId: ${{ steps.op-load-secret.outputs.CLOUDFLARE_ACCOUNT_ID }}
+          # Branch can always be prod so that deployment is deployed on correct domain instead of the one on pages.
+          command: pages deploy
