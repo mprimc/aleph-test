@@ -8,7 +8,7 @@ const BookList: React.FC = () => {
 
   return (
     <div className="book-list-container">
-           <h1>Book Search</h1>
+      <h1>Book Search</h1>
       <input
         type="text"
         className="search-box"
@@ -20,11 +20,9 @@ const BookList: React.FC = () => {
       {error && <p className="error">{error}</p>}
 
       <div className="book-grid">
-        {books.length > 0 ? (
-          books.map((book, index) => <BookCard key={index} {...book} />)
-        ) : (
-          !loading && <p className="no-results">No books found</p>
-        )}
+        {books.length > 0
+          ? books.map((book) => <BookCard key={book.key} book={book} />)
+          : !loading && <p className="no-results">No books found</p>}
       </div>
     </div>
   );
